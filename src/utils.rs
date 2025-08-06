@@ -1,4 +1,19 @@
 use std::str::FromStr;
+use alloy_primitives::{Address, B256, U256};
+use chrono::{DateTime, Utc};
+
+/// Format U256 Wei values to ETH with proper decimal places
+pub fn format_wei_u256(wei: &U256) -> String {
+    let wei_as_u128 = wei.to::<u128>();
+    let eth = wei_as_u128 as f64 / 1_000_000_000_000_000_000.0;
+    if eth >= 1.0 {
+        format!("{:.4} ETH", eth)
+    } else if eth >= 0.001 {
+        format!("{:.6} ETH", eth)
+    } else {
+        format!("{:.9} ETH", eth)
+    }
+}
 
 /// Format Wei values to ETH with proper decimal places
 pub fn format_wei(wei_str: &str) -> String {
@@ -57,8 +72,71 @@ pub fn format_number(num: u64) -> String {
 
 /// Format timestamp from Unix timestamp to human readable
 pub fn format_timestamp(timestamp: u64) -> String {
-    // Mock implementation - in reality you'd use chrono or similar
-    format!("{} seconds since epoch", timestamp)
+    let dt = DateTime::from_timestamp(timestamp as i64, 0)
+        .unwrap_or_else(|| Utc::now());
+    dt.format("%Y-%m-%d %H:%M:%S UTC").to_string()
+}
+
+/// Format U256 timestamp to human readable
+pub fn format_timestamp_u256(timestamp: &U256) -> String {
+    let timestamp_u64 = timestamp.to::<u64>();
+    format_timestamp(timestamp_u64)
+}
+
+/// Format B256 hash for display
+pub fn format_b256_hash(hash: &B256) -> String {
+    let hash_str = format!("{:?}", hash);
+    format_hash(&hash_str)
+}
+
+/// Format Address for display
+pub fn format_eth_address(address: &Address) -> String {
+    let addr_str = format!("{:?}", address);
+    format_address(&addr_str)
+}
+
+/// Format gas price from wei to gwei
+pub fn format_gas_price(gas_price: &U256) -> String {
+    let gwei = gas_price.to::<u128>() as f64 / 1_000_000_000.0;
+    format!("{:.2} Gwei", gwei)
+}
+
+/// Format transaction status
+pub fn format_tx_status(status: &Option<U256>) -> String {
+    match status {
+        Some(s) if s.is_zero() => "❌ Failed".to_string(),
+        Some(_) => "✅ Success".to_string(),
+        None => "⏳ Pending".to_string(),
+    }
+}
+
+/// Calculate time ago from timestamp
+pub fn time_ago(timestamp: u64) -> String {
+    let now = Utc::now().timestamp() as u64;
+    if now <= timestamp {
+        return "just now".to_string();
+    }
+    
+    let diff = now - timestamp;
+    
+    if diff < 60 {
+        format!("{} sec ago", diff)
+    } else if diff < 3600 {
+        format!("{} min ago", diff / 60)
+    } else if diff < 86400 {
+        format!("{} hr ago", diff / 3600)
+    } else {
+        format!("{} days ago", diff / 86400)
+    }
+}
+
+/// Detect contract vs EOA
+pub fn account_type(code_size: &U256) -> &'static str {
+    if code_size.is_zero() {
+        "👤 Externally Owned Account"
+    } else {
+        "💼 Smart Contract"
+    }
 }
 
 /// Calculate gas utilization percentage

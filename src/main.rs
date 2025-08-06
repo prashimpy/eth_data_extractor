@@ -5,6 +5,7 @@ use std::str::FromStr;
 
 mod explorer;
 mod utils;
+mod rpc;
 
 use explorer::BlockExplorer;
 
@@ -12,6 +13,10 @@ use explorer::BlockExplorer;
 #[command(name = "eth_data_extractor")]
 #[command(about = "A CLI Ethereum data extraction tool built with Reth")]
 struct Cli {
+    /// RPC URL for the Ethereum node
+    #[arg(short, long, default_value = "http://localhost:8545")]
+    rpc_url: String,
+    
     #[command(subcommand)]
     command: Commands,
 }
@@ -55,7 +60,7 @@ async fn main() -> Result<()> {
     color_eyre::install()?;
     
     let cli = Cli::parse();
-    let explorer = BlockExplorer::new().await?;
+    let explorer = BlockExplorer::new(&cli.rpc_url).await?;
     
     match cli.command {
         Commands::Block { block_id } => {
