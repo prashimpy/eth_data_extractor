@@ -1,5 +1,9 @@
 # Ethereum Data Extractor CLI
 
+[![CI](https://github.com/prashimpy/eth_data_extractor/workflows/CI/badge.svg)](https://github.com/prashimpy/eth_data_extractor/actions)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Rust](https://img.shields.io/badge/rust-1.70%2B-brightgreen.svg)](https://www.rust-lang.org)
+
 A command-line Ethereum data extraction tool built with Rust and Reth, Paradigm's high-performance Ethereum execution client.
 
 ## Features
