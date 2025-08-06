@@ -1,18 +1,24 @@
-# Ethereum Data Extractor CLI
+# 🔗 Ethereum Data Extractor CLI
 
 [![CI](https://github.com/prashimpy/eth_data_extractor/workflows/CI/badge.svg)](https://github.com/prashimpy/eth_data_extractor/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Rust](https://img.shields.io/badge/rust-1.70%2B-brightgreen.svg)](https://www.rust-lang.org)
+[![Reth](https://img.shields.io/badge/reth-compatible-blue.svg)](https://github.com/paradigmxyz/reth)
 
-A command-line Ethereum data extraction tool built with Rust and Reth, Paradigm's high-performance Ethereum execution client.
+A **production-ready** command-line Ethereum blockchain data extraction and analysis tool built with Rust. Features real-time connectivity to Ethereum networks via RPC, with built-in caching, retry mechanisms, and beautiful terminal output.
 
-## Features
+![Demo](https://img.shields.io/badge/status-production--ready-brightgreen.svg)
 
-🔍 **Block Information**: Get detailed information about any block by number or hash
-💸 **Transaction Details**: View comprehensive transaction data including gas usage and fees
-👤 **Account Explorer**: Check account balances, nonces, and contract information
-📊 **Latest Blocks**: Display recent blocks with key metrics
-⛽ **Gas Analytics**: Analyze gas usage patterns and statistics
+## ✨ Features
+
+🔍 **Real-Time Block Analysis**: Get detailed information about any block by number or hash  
+💸 **Transaction Explorer**: View comprehensive transaction data with gas analysis  
+👤 **Account Intelligence**: Check balances, nonces, and detect smart contracts vs EOAs  
+📊 **Latest Blocks Monitor**: Display recent blocks with live network metrics  
+⛽ **Gas Analytics Engine**: Advanced gas usage patterns and network congestion analysis  
+🌐 **Multi-RPC Support**: Connect to any Ethereum RPC endpoint (local nodes, Infura, Alchemy, etc.)  
+⚡ **Performance Optimized**: Built-in caching and retry mechanisms for robust operation  
+🎨 **Beautiful CLI Output**: Professional terminal formatting with tables and visual indicators
 
 ## Installation
 
