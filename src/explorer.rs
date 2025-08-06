@@ -145,7 +145,7 @@ impl BlockExplorer {
         for block_num in (start_block..=latest_block_num).rev() {
             match self.client.get_block_by_number(block_num).await {
                 Ok(block) => {
-                    let gas_used_m = block.gas_used.to::<f64>() / 1_000_000.0;
+                    let gas_used_m = block.gas_used.to::<u128>() as f64 / 1_000_000.0;
                     let time_ago_str = time_ago(block.timestamp.to::<u64>());
                     
                     table.add_row(vec![

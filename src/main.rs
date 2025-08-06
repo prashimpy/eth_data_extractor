@@ -1,7 +1,5 @@
 use clap::{Parser, Subcommand};
 use color_eyre::Result;
-use alloy_primitives::{Address, B256, U256};
-use std::str::FromStr;
 
 mod explorer;
 mod utils;

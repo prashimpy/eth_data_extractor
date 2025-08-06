@@ -1,4 +1,3 @@
-use std::str::FromStr;
 use alloy_primitives::{Address, B256, U256};
 use chrono::{DateTime, Utc};
 

@@ -1,6 +1,5 @@
 use alloy_primitives::{Address, B256, U256};
-use backoff::{ExponentialBackoff, ExponentialBackoffBuilder};
-use chrono::{DateTime, Utc};
+use backoff::ExponentialBackoffBuilder;
 use color_eyre::{eyre::eyre, Result};
 use jsonrpsee::{
     http_client::{HttpClient, HttpClientBuilder},
@@ -66,7 +65,6 @@ impl RethClient {
     pub async fn new(rpc_url: &str) -> Result<Self> {
         let client = HttpClientBuilder::default()
             .request_timeout(Duration::from_secs(60))
-            .connection_timeout(Duration::from_secs(30))
             .build(rpc_url)?;
 
         // Test connection
@@ -100,7 +98,7 @@ impl RethClient {
         }
 
         let block_hex = format!("0x{:x}", block_number);
-        let result = self
+        let result: serde_json::Value = self
             .retry_rpc_call("eth_getBlockByNumber", rpc_params![block_hex, true])
             .await?;
 
@@ -119,7 +117,7 @@ impl RethClient {
             }
         }
 
-        let result = self
+        let result: serde_json::Value = self
             .retry_rpc_call("eth_getBlockByHash", rpc_params![block_hash, true])
             .await?;
 
@@ -149,11 +147,11 @@ impl RethClient {
             }
         }
 
-        let tx_result = self
+        let tx_result: serde_json::Value = self
             .retry_rpc_call("eth_getTransactionByHash", rpc_params![tx_hash])
             .await?;
 
-        let receipt_result = self
+        let receipt_result: serde_json::Value = self
             .retry_rpc_call("eth_getTransactionReceipt", rpc_params![tx_hash])
             .await?;
 
